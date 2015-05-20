@@ -1,39 +1,47 @@
 from spotiPi import SpotiPi
 import ConfigParser
 import argparse
+from flask import Flask, url_for, render_template
 
-def main():
-    creds = ConfigParser.ConfigParser()
+creds = ConfigParser.ConfigParser()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--creds",
+parser = argparse.ArgumentParser()
+parser.add_argument("-c", "--creds",
                         help="credentials.ini file")
 
-    args = parser.parse_args()
+args = parser.parse_args()
 
-    if (args.creds == None):
-        creds.read("config.ini")
+if (args.creds == None):
+    creds.read("config.ini")
 
-    else:
-        creds.read(args.creds)
+else:
+    creds.read(args.creds)
 
-    uname = creds.get("creds", "UserName")
-    pw = creds.get("creds", "Password")
-    sp = SpotiPi(uname, pw)
+uname = creds.get("creds", "UserName")
+pw = creds.get("creds", "Password")
+print "making spot"
+sp = SpotiPi(uname, pw)
+print "made spot"
 
-    sp.loadPlaylists()
+sp.loadPlaylists()
 
-    import time
+# pl = sp.playlists[1]
+# track = pl.tracks[0]
+# sp.loadTrack(track)
+# sp.play()
 
-    pl = sp.playlists[1]
-    track = pl.tracks[0]
-    sp.loadTrack(track)
-    sp.play()
+# time.sleep(10)
 
-    time.sleep(10)
+# sp.pause()
 
-    sp.pause()
+# sp.logOut()
 
-    sp.logOut()
+app = Flask(__name__)
 
-if __name__=="__main__": main()
+@app.route("/")
+def index():
+    return render_template('index.html')
+
+if __name__=="__main__":
+    print app
+    app.run()

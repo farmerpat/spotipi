@@ -33,7 +33,7 @@ class SpotiPi:
         playLists = self.session.playlist_container
 
         if not playLists.is_loaded:
-            container.load()
+            playLists.load()
 
         for pList in playLists:
             pList.load()

@@ -1,0 +1,48 @@
+body {
+    font-family: "Verdana";
+    background: #FCFEEB;
+}
+
+#container {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#heading {
+    margin-left: auto;
+    margin-right: auto;
+    border-top: solid black 1px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-bottom: solid black 1px;
+    text-align: center;
+    
+}
+
+#content {
+    margin-left: auto;
+    margin-right: auto;
+    border: solid black 1px;
+    min-height: 650px;
+}
+
+#button-container {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+/*    width: 630px;*/
+}
+
+a.button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    border: solid black 1px;
+    text-align: center;
+
+}

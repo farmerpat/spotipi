@@ -1,0 +1,22 @@
+<!doctype html>
+<head>
+  <title>spotiPi</title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id=container>
+    <div id=heading>
+      <h3>Welcome To spotiPi</h3>
+    </div>
+    <div id=content>
+      <div id=button-container>
+        <a class=button id=now_playing href=#>Now Playing</a>
+        <a class=button id=play_queue href=#>Play Queue</a>
+        <a class=button id=playlists href=#>View Playlists</a>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='custom.js') }}"></script>
+</body>
+</html>
