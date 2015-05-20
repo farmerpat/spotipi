@@ -51,5 +51,18 @@ $(document).ready(function () {
 
     $("#playlists").accordion({active: false, collapsible: true});
     //$("#playlists ul").hide();
+
+    $(".spotify-track-link").click(function (e) {
+      var trackUri = $(this).attr("data-spotify-track-uri");
+
+      $.ajax({
+        method: "GET",
+        url: "/playtrack/" + trackUri,
+        success: function (data) {
+          console.log("response:");
+          console.log(data);
+        }
+      });
+    });
   }
 });

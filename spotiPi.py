@@ -77,6 +77,14 @@ class SpotiPi:
     def pause(self):
         self.session.player.pause()
 
+    def playTrackUri(self, trackUri):
+        # add a playerState to self ("playing" or "paused")
+        # check it, pause if playing first
+        track = self.session.get_track(trackUri)
+        track.load()
+        self.session.player.load(track)
+        self.play()
+
 class Playlist:
     def __init__(self):
         self.name = None
@@ -93,9 +101,6 @@ class Playlist:
             tracks.append(track.toDict())
 
         dic['tracks'] = tracks
-
-        print "dic"
-        print dic
 
         return dic
 

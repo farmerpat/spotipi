@@ -46,11 +46,22 @@ def index():
 def getPlaylists():
     playLists = []
 
-    print sp.playlists
+    #print sp.playlists
     for l in sp.playlists:
         playLists.append(l.toDict())
 
     return jsonify(playlists=playLists)
+
+@app.route("/playtrack/<trackUri>")
+def playTrack(trackUri):
+
+    # it will be better to return the playlist's uri, and track index
+    # we can then add a playlistLookUp method to SpotiPi
+    # and pull the track out and use the loadTrack() and play() methods
+    sp.playTrackUri(trackUri)
+
+    status = "success"
+    return jsonify(status=status)
 
 if __name__=="__main__":
     app.run()
