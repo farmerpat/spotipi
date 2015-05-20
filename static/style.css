@@ -46,3 +46,32 @@ a.button {
     text-align: center;
 
 }
+
+#playlists  .ui-accordion-content {
+    background: #FCFEEB;
+    color: black;
+    font-size: 10pt;
+    line-height: 16pt;
+    width: 488px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#playlists .ui-accordion-header {
+    /*margin: 0;*/
+}
+
+#playlists .ui-accordion-header {
+    margin-left: auto;
+    margin-right: auto;
+    
+    background: #FCFEEB;
+    color: black;
+    width: 500px;
+}
+
+#playlists .ui-state-active {
+    background: #FCFEEB;
+}
+
+/*#playlists .ui-state-acti*/

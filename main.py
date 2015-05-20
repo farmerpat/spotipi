@@ -1,7 +1,7 @@
 from spotiPi import SpotiPi
 import ConfigParser
 import argparse
-from flask import Flask, url_for, render_template
+from flask import Flask, url_for, render_template, jsonify
 
 creds = ConfigParser.ConfigParser()
 
@@ -42,6 +42,15 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route("/playlists")
+def getPlaylists():
+    playLists = []
+
+    print sp.playlists
+    for l in sp.playlists:
+        playLists.append(l.toDict())
+
+    return jsonify(playlists=playLists)
+
 if __name__=="__main__":
-    print app
     app.run()

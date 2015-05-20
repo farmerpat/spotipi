@@ -1,3 +1,6 @@
+# TODO
+#   - create Arist, Album classes
+#   - create toDict methods for them
 import spotify
 import threading
 
@@ -53,6 +56,7 @@ class SpotiPi:
                 theseTracks.append(thisTrack)
 
             thisPlayList.tracks = theseTracks
+            thisPlayList.numTracks = len(theseTracks)
             # it might make more sense to use a dict for playlists
             # where key == playlist name and value is thisPlaylist
             self.playlists.append(thisPlayList)
@@ -79,6 +83,22 @@ class Playlist:
         self.tracks = []
         self.numTracks = len(self.tracks)
 
+    def toDict(self):
+        dic = {}
+        tracks = []
+        dic['name'] = self.name
+        dic['numTracks'] = self.numTracks
+
+        for track in self.tracks:
+            tracks.append(track.toDict())
+
+        dic['tracks'] = tracks
+
+        print "dic"
+        print dic
+
+        return dic
+
 class Track:
     def __init__(self):
         self.title = None
@@ -87,3 +107,13 @@ class Track:
         # in miliseconds
         self.duration = None
         self.uri = None
+
+    def toDict(self):
+        dic = {}
+        dic['title'] = self.title
+        # dic['artist'] = self.artist
+        # dic['album'] = self.album
+        dic['duration'] = self.duration
+        dic['uri'] = self.uri
+
+        return dic
