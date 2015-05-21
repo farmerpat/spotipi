@@ -5,7 +5,7 @@ import spotify
 import threading
 
 class SpotiPi:
-    def __init__(self, uname, pw):
+    def __init__(self, uname, pw, sink):
         self.userName = uname
         self.playlists = []
 
@@ -13,7 +13,15 @@ class SpotiPi:
         self.loggedInEvent = threading.Event()
 
         self.session = spotify.Session()
-        self.player = spotify.PortAudioSink(self.session)
+
+        if (sink == "alsa"):
+            self.player = spotify.AlsaSink(self.session)
+        elif (sink == "port"):
+            self.player = spotify.PortAudioSink(self.session)
+        else:
+            print "unrecognized sink option: " + sink
+            print "playback unavailable"
+
         self.loop = spotify.EventLoop(self.session)
         self.loop.start()
 

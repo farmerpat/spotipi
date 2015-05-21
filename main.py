@@ -19,8 +19,9 @@ else:
 
 uname = creds.get("creds", "UserName")
 pw = creds.get("creds", "Password")
+sink = creds.get("config", "Sink")
 print "making spot"
-sp = SpotiPi(uname, pw)
+sp = SpotiPi(uname, pw, sink)
 print "made spot"
 
 sp.loadPlaylists()
