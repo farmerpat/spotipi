@@ -49,7 +49,9 @@ $(document).ready(function () {
       //$("#playlists").after($(html));
     });
 
-    $("#playlists").accordion({active: false, collapsible: true});
+    $("#playlists").accordion({active: false,
+                               collapsible: true,
+                               heightStyle: "content"});
     //$("#playlists ul").hide();
 
     $(".spotify-track-link").click(function (e) {

@@ -1,15 +1,19 @@
 # TODO
 #   - create Arist, Album classes
 #   - create toDict methods for them
+#   - use pyalsaaudio to tweak volume
 import spotify
 import threading
+from collections import deque
 
 class SpotiPi:
     def __init__(self, uname, pw, sink):
         self.userName = uname
         self.playlists = []
+        self.queue = deque()
 
         self.loggedIn = False
+        self.status = "stopped"
         self.loggedInEvent = threading.Event()
 
         self.session = spotify.Session()
@@ -28,6 +32,11 @@ class SpotiPi:
         self.session.on(
             spotify.SessionEvent.CONNECTION_STATE_UPDATED,
             self.connectionListener)
+
+        self.session.on(
+            spotify.SessionEvent.END_OF_TRACK,
+            self.playNextTrack
+        )
 
         self.session.login(uname, pw)
 
@@ -80,10 +89,16 @@ class SpotiPi:
         self.session.player.load(track)
 
     def play(self):
-        self.session.player.play()
+        self.session.player.play(1)
+        self.status = "playing"
 
     def pause(self):
         self.session.player.pause()
+        self.status = "paused"
+
+    def stop(self):
+        self.session.player.play(0)
+        self.status = "stopped"
 
     def playTrackUri(self, trackUri):
         # add a playerState to self ("playing" or "paused")
@@ -92,6 +107,54 @@ class SpotiPi:
         track.load()
         self.session.player.load(track)
         self.play()
+
+    def enqueue(self, track):
+        self.queue.append(track)
+
+    def dequeue(self):
+        if (len(self.queue) > 0):
+            return self.queue.popleft()
+        else:
+            return False
+
+    def playTrack(self, track):
+        if (track):
+            if (self.status == "playing"):
+                self.stop()
+
+            self.nowPlaying = track
+            track = self.session.get_track(track.uri)
+            track.load()
+            self.session.player.load(track)
+            self.play()
+            self.status = "playing"
+
+            # probably put me in a function
+            #print "now playing"
+            #print "Title: " + track.title
+            #print "Artist: " + track.artist
+
+        else:
+            print "attempted to play False"
+
+    def playNextTrack(self, thing):
+        if (len(self.queue) > 0):
+            track = self.dequeue()
+
+            if (track):
+                self.playTrack(track)
+
+    def playPlaylist(self, pl):
+        if (self.status == "playing"):
+            self.stop()
+
+        self.queue.clear()
+
+        for track in pl.tracks:
+            self.enqueue(track)
+
+        self.playNextTrack("thing")
+
 
 class Playlist:
     def __init__(self):

@@ -26,7 +26,8 @@ print "made spot"
 
 sp.loadPlaylists()
 
-# pl = sp.playlists[1]
+pl = sp.playlists[39]
+sp.playPlaylist(pl)
 # track = pl.tracks[0]
 # sp.loadTrack(track)
 # sp.play()
