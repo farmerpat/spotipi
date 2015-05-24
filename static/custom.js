@@ -22,7 +22,6 @@ $(document).ready(function () {
   });
 
   function displayPlaylists (playlists) {
-    console.log(playlists[0]);
     $("#button-container").after(
       $("<div id='playlists'></div>")
     );
@@ -32,15 +31,28 @@ $(document).ready(function () {
       html += playlist.name;
       html += "</h3>";
       html += "<div><p>";
-      // add data-spotify-playlist-uri
-      html += "<ul><li><a class='spotify-playlist-link play-all-link' href='#'>Play All</a></li>";
+      html += "<ul><li><a data-index='";
+      html += i;
+      html += "' class='spotify-playlist-link play-all-link' href='#'>";
+      html += "Play All</a></li>";
 
       $.each(playlist.tracks, function (j, track) {
-        html += "<li><a class='spotify-track-link' href='#' data-spotify-track-uri='";
+        html += "<li><a data-index='";
+        html += j;
+        html += "' ";
+        html += "data-playlist-index='";
+        html += i;
+        html += "' ";
+        html += " class='spotify-track-link'";
+        html += " href='#' data-spotify-track-uri='";
         html += track.uri;
         html += "'>";
         html += track.title;
-        html += "</a></li>";
+        html += "</a>";
+        html += "<div style='float: right;'>";
+        html += "<a class='spotify-play-from' href='#'>></a>";
+        html += "</div>";
+        html += "</li>";
       });
 
       html += "</ul></p></div>";
@@ -62,6 +74,30 @@ $(document).ready(function () {
         url: "/playtrack/" + trackUri,
         success: function (data) {
           console.log("response:");
+          console.log(data);
+        }
+      });
+    });
+
+    $(".spotify-playlist-link").click(function (e) {
+      console.log("play all!");
+      var index = $(this).attr("data-index");
+      $.ajax({
+        method: "GET",
+        url: "/playPlaylist/" + index,
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+
+    $(".spotify-play-from").click(function (e) {
+      var trackIndex = $(this).parent().parent().find("a").attr("data-index");
+      var playListIndex = $(this).parent().parent().find("a").attr("data-playlist-index");
+      $.ajax({
+        method: "GET",
+        url: "/playPlaylistFrom/" + playListIndex + "/" + trackIndex,
+        success: function (data) {
           console.log(data);
         }
       });

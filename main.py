@@ -26,15 +26,8 @@ print "made spot"
 
 sp.loadPlaylists()
 
-pl = sp.playlists[39]
-sp.playPlaylist(pl)
-# track = pl.tracks[0]
-# sp.loadTrack(track)
-# sp.play()
-
-# time.sleep(10)
-
-# sp.pause()
+#pl = sp.playlists[39]
+#sp.playPlaylist(pl)
 
 # sp.logOut()
 
@@ -64,6 +57,18 @@ def playTrack(trackUri):
 
     status = "success"
     return jsonify(status=status)
+
+@app.route("/playPlaylist/<playListIndex>")
+def playPlaylist(playListIndex):
+    sp.playPlaylist(sp.playlists[int(playListIndex)])
+    # make me meaningful
+    return jsonify(status="derp")
+
+@app.route("/playPlaylistFrom/<playListIndex>/<songIndex>")
+def playPlaylistFrom(playListIndex, songIndex):
+    sp.playPlaylistFrom(int(playListIndex), int(songIndex))
+    # make me meaningful
+    return jsonify(status="derp")
 
 if __name__=="__main__":
     app.run()

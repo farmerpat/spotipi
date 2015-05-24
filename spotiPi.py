@@ -31,7 +31,8 @@ class SpotiPi:
 
         self.session.on(
             spotify.SessionEvent.CONNECTION_STATE_UPDATED,
-            self.connectionListener)
+            self.connectionListener
+        )
 
         self.session.on(
             spotify.SessionEvent.END_OF_TRACK,
@@ -149,12 +150,30 @@ class SpotiPi:
             self.stop()
 
         self.queue.clear()
+        print "cleared queue"
 
         for track in pl.tracks:
             self.enqueue(track)
 
+        print "finsihed enqueing tracks"
+        print "queue:"
+        print self.queue
+
+        # fix this
         self.playNextTrack("thing")
 
+    def playPlaylistFrom(self, playListIndex, songIndex):
+        if (self.status == "playing"):
+            self.stop()
+
+        self.queue.clear()
+        pl = self.playlists[playListIndex]
+
+        for track in pl.tracks[songIndex:]:
+            self.enqueue(track)
+
+        # fix this
+        self.playNextTrack("thing")
 
 class Playlist:
     def __init__(self):
