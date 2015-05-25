@@ -1,3 +1,11 @@
+"""
+TODO:
+  - Change View Playlists to Hide Playlists when clicked
+    - add global playListsLoaded bool to check when toggling playlists.
+    - if not loaded, load and display, if loaded, just display
+  - Add basic player controls to UI
+  - Add README.md and put on github
+"""
 from spotiPi import SpotiPi
 import ConfigParser
 import argparse
@@ -75,8 +83,6 @@ def addToQueue(playListIndex, songIndex):
     track = sp.playlists[int(playListIndex)].tracks[int(songIndex)]
     print "enqueueing " + track.title
     sp.enqueue(track)
-    print sp.queue
-    print sp.queue
     return jsonify(status="derp")
 
 if __name__=="__main__":
