@@ -70,5 +70,14 @@ def playPlaylistFrom(playListIndex, songIndex):
     # make me meaningful
     return jsonify(status="derp")
 
+@app.route("/addToQueue/<playListIndex>/<songIndex>")
+def addToQueue(playListIndex, songIndex):
+    track = sp.playlists[int(playListIndex)].tracks[int(songIndex)]
+    print "enqueueing " + track.title
+    sp.enqueue(track)
+    print sp.queue
+    print sp.queue
+    return jsonify(status="derp")
+
 if __name__=="__main__":
     app.run()

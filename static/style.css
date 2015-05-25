@@ -4,7 +4,7 @@ body {
 }
 
 #container {
-    width: 600px;
+    width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -52,7 +52,7 @@ a.button {
     color: black;
     font-size: 10pt;
     line-height: 16pt;
-    width: 488px;
+    width: 510px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -67,7 +67,7 @@ a.button {
     
     background: #FCFEEB;
     color: black;
-    width: 500px;
+    width: 550px;
 }
 
 #playlists .ui-state-active {

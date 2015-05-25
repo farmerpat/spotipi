@@ -37,6 +37,13 @@ $(document).ready(function () {
       html += "Play All</a></li>";
 
       $.each(playlist.tracks, function (j, track) {
+        var title = track.title;
+
+        if (title.length > 71) {
+          title = title.substring(0,68);
+          title += "...";
+        }
+
         html += "<li><a data-index='";
         html += j;
         html += "' ";
@@ -47,10 +54,11 @@ $(document).ready(function () {
         html += " href='#' data-spotify-track-uri='";
         html += track.uri;
         html += "'>";
-        html += track.title;
+        html += title;
         html += "</a>";
         html += "<div style='float: right;'>";
-        html += "<a class='spotify-play-from' href='#'>></a>";
+        html += "<a class='spotify-play-from' href='#'>></a>&nbsp;&nbsp&nbsp;";
+        html += "<a class='spotify-add-to-queue' href='#'>+</a>";
         html += "</div>";
         html += "</li>";
       });
@@ -58,13 +66,11 @@ $(document).ready(function () {
       html += "</ul></p></div>";
 
       $("#playlists").append($(html));
-      //$("#playlists").after($(html));
     });
 
     $("#playlists").accordion({active: false,
                                collapsible: true,
                                heightStyle: "content"});
-    //$("#playlists ul").hide();
 
     $(".spotify-track-link").click(function (e) {
       var trackUri = $(this).attr("data-spotify-track-uri");
@@ -92,11 +98,23 @@ $(document).ready(function () {
     });
 
     $(".spotify-play-from").click(function (e) {
-      var trackIndex = $(this).parent().parent().find("a").attr("data-index");
-      var playListIndex = $(this).parent().parent().find("a").attr("data-playlist-index");
+      var trackIndex = $($(this).parent().parent().find("a")[0]).attr("data-index");
+      var playListIndex = $($(this).parent().parent().find("a")[0]).attr("data-playlist-index");
       $.ajax({
         method: "GET",
         url: "/playPlaylistFrom/" + playListIndex + "/" + trackIndex,
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+
+    $(".spotify-add-to-queue").click(function (e) {
+      var trackIndex = $($(this).parent().parent().find("a")[0]).attr("data-index");
+      var playListIndex = $($(this).parent().parent().find("a")[0]).attr("data-playlist-index");
+      $.ajax({
+        method: "GET",
+        url: "/addToQueue/" + playListIndex + "/" + trackIndex,
         success: function (data) {
           console.log(data);
         }
