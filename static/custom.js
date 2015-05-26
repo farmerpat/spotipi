@@ -1,6 +1,50 @@
 $(document).ready(function () {
   console.log("reddie");
 
+  $("#show_controls").click(function () {
+    if ($(this).text() == "Show Controls") {
+      $(this).text("Hide Controls");
+      $(".control_panel").show();
+
+    } else if ($(this).text() == "Hide Controls") {
+      $(this).text("Show Controls");
+      $(".control_panel").hide();
+
+    } else {
+      console.log("the universe explodes");
+    }
+  });
+
+  $("#play_button").click(function () {
+    $.ajax({
+      method: "GET",
+      url: "/play",
+      success: function (data) {
+        console.log(data);
+      }
+    });
+  });
+
+  $("#pause_button").click(function () {
+    $.ajax({
+      method: "GET",
+      url: "/pause",
+      success: function (data) {
+        console.log(data);
+      }
+    });
+  });
+
+  $("#skip_button").click(function () {
+    $.ajax({
+      method: "GET",
+      url: "/skip",
+      success: function (data) {
+        console.log(data);
+      }
+    });
+  });
+
   $("#now_playing").click(function () {
     console.log("clikked now playing");
   });

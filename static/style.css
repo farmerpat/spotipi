@@ -17,7 +17,6 @@ body {
     border-right: solid black 1px;
     border-bottom: solid black 1px;
     text-align: center;
-    
 }
 
 #content {
@@ -44,7 +43,10 @@ a.button {
     display: block;
     border: solid black 1px;
     text-align: center;
+}
 
+a.control_panel {
+    background: #E6E0F0;
 }
 
 #playlists  .ui-accordion-content {

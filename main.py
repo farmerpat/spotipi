@@ -85,5 +85,24 @@ def addToQueue(playListIndex, songIndex):
     sp.enqueue(track)
     return jsonify(status="derp")
 
+@app.route("/play")
+def play():
+    if (sp.status == "stopped"):
+        sp.playNextTrack("thing")
+    else:
+        sp.play();
+
+    return jsonify(status="derp")
+
+@app.route("/pause")
+def pause():
+    sp.pause()
+    return jsonify(status="derp")
+
+@app.route("/skip")
+def skip():
+    sp.playNextTrack("thing")
+    return jsonify(status="derp")
+
 if __name__=="__main__":
     app.run()
