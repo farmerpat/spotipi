@@ -104,5 +104,14 @@ def skip():
     sp.playNextTrack("thing")
     return jsonify(status="derp")
 
+@app.route("/playQueue")
+def playQueue():
+    tracks = []
+
+    for track in sp.queue:
+        tracks.append(track.toDict())
+
+    return jsonify(tracks=tracks)
+
 if __name__=="__main__":
     app.run()

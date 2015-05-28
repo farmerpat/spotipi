@@ -50,8 +50,25 @@ $(document).ready(function () {
   });
 
   $("#play_queue").click(function () {
-    console.log("clikked play queue");
+    $.ajax({
+      method: "GET",
+      url: "/playQueue",
+      success: function (data) {
+        if (data && data.tracks) {
+          displayPlayQueue(data.tracks);
+
+        }
+      }
+    });
   });
+
+  function displayPlayQueue(tracks) {
+    $.each(tracks, function (i, track) {
+      // build the li
+      // append to now_playing_display
+      console.log(track);
+    });
+  }
 
   $("#view_playlists").click(function () {
     $.ajax({

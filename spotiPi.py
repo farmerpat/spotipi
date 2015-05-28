@@ -1,6 +1,5 @@
 # TODO
-#   - create Arist, Album classes
-#   - create toDict methods for them
+#   - support multi-artist tracks
 #   - use pyalsaaudio to tweak volume
 import spotify
 import threading
@@ -67,8 +66,21 @@ class SpotiPi:
             for track in pList.tracks:
                 thisTrack = Track()
                 thisTrack.title = track.name
-                thisTrack.artist = track.artists
-                thisTrack.album = track.album
+
+                # lazily grab the first artist only
+                artist = track.artists[0].load()
+                thisTrack.artist = Artist()
+                thisTrack.artist.name = artist.name
+                thisTrack.artist.uri = artist.link.uri
+
+                album = track.album
+                album.load()
+                thisTrack.album = Album()
+                thisTrack.album.name = album.name
+                thisTrack.album.uri = album.link.uri
+                thisTrack.album.year = album.year
+
+
                 thisTrack.duration = track.duration
                 thisTrack.uri = track.link.uri
                 theseTracks.append(thisTrack)
@@ -206,9 +218,34 @@ class Track:
     def toDict(self):
         dic = {}
         dic['title'] = self.title
-        # dic['artist'] = self.artist
-        # dic['album'] = self.album
+        dic['artist'] = self.artist.toDict()
+        dic['album'] = self.album.toDict()
         dic['duration'] = self.duration
         dic['uri'] = self.uri
+
+        return dic
+
+class Artist:
+    def __init__(self):
+        self.name = None
+        self.uri = None
+
+    def toDict(self):
+        dic = {}
+        dic['name'] = self.name
+        dic['uri'] = self.uri
+        return dic
+
+class Album:
+    def __init__(self):
+        self.name = None
+        self.uri = None
+        self.year = None
+
+    def toDict(self):
+        dic = {}
+        dic['name'] = self.name
+        dic['uri'] = self.uri
+        dic['year'] = self.year
 
         return dic
