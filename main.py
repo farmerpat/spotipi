@@ -1,9 +1,5 @@
 """
 TODO:
-  - Change View Playlists to Hide Playlists when clicked
-    - add global playListsLoaded bool to check when toggling playlists.
-    - if not loaded, load and display, if loaded, just display
-  - Add basic player controls to UI
   - Add README.md and put on github
 """
 from spotiPi import SpotiPi
