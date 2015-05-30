@@ -1,7 +1,3 @@
-"""
-TODO:
-  - Add README.md and put on github
-"""
 from spotiPi import SpotiPi
 import ConfigParser
 import argparse

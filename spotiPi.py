@@ -1,6 +1,3 @@
-# TODO
-#   - support multi-artist tracks
-#   - use pyalsaaudio to tweak volume
 import spotify
 import threading
 from collections import deque
