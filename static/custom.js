@@ -1,3 +1,5 @@
+window.playListsLoaded = false;
+
 $(document).ready(function () {
   console.log("reddie");
 
@@ -87,22 +89,32 @@ $(document).ready(function () {
   }
 
   $("#view_playlists").click(function () {
-    $.ajax({
-      method: "GET",
-      url: "/playlists",
-      success: function (data) {
-        if (data && data.playlists) {
-          displayPlaylists(data.playlists);
-        }
+    if ($("#view_playlists").text() == "View Playlists") {
+      if (!window.playListsLoaded) {
+        $.ajax({
+          method: "GET",
+          url: "/playlists",
+          success: function (data) {
+            if (data && data.playlists) {
+              makePlaylistsDiv(data.playlists);
+              window.playListsLoaded = true;
+
+            }
+          }
+        });
       }
-    });
+
+      $("#playlists").show();
+      $("#view_playlists").text("Hide Playlists");
+
+    } else {
+      $("#view_playlists").text("View Playlists");
+      $("#playlists").hide();
+
+    }
   });
 
-  function displayPlaylists (playlists) {
-    $("#button-container").after(
-      $("<div id='playlists'></div>")
-    );
-
+  function makePlaylistsDiv (playlists) {
     $.each(playlists, function (i, playlist) {
       var html = "<h3>";
       html += playlist.name;
