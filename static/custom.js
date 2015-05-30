@@ -50,23 +50,39 @@ $(document).ready(function () {
   });
 
   $("#play_queue").click(function () {
+    if ($("#play_queue").text() == "View Play Queue") {
+      console.log("is da view play quee");
+      $("#queue").html("<ul></ul>");
+      $("#play_queue").text("Hide Play Queue");
+      displayPlayQueue();
+
+    } else {
+      $("#queue").hide();
+      $("#play_queue").text("View Play Queue");
+
+    }
+  });
+
+  function displayPlayQueue() {
     $.ajax({
       method: "GET",
       url: "/playQueue",
       success: function (data) {
         if (data && data.tracks) {
-          displayPlayQueue(data.tracks);
-
+          buildPlayQueue(data.tracks);
+          $("#queue").show();
         }
       }
     });
-  });
+  }
 
-  function displayPlayQueue(tracks) {
+  function buildPlayQueue(tracks) {
     $.each(tracks, function (i, track) {
-      // build the li
-      // append to now_playing_display
-      console.log(track);
+      var nodeString = "<li>";
+      nodeString += track.title;
+      nodeString += "</li>";
+
+      $("#queue ul").append(nodeString);
     });
   }
 
@@ -94,14 +110,14 @@ $(document).ready(function () {
       html += "<div><p>";
       html += "<ul><li><a data-index='";
       html += i;
-      html += "' class='spotify-playlist-link play-all-link' href='#'>";
+      html += "' class='spotify-playlist-link play-all-link' href='javascript:void(0)'>";
       html += "Play All</a></li>";
 
       $.each(playlist.tracks, function (j, track) {
         var title = track.title;
 
-        if (title.length > 71) {
-          title = title.substring(0,68);
+        if (title.length > 65) {
+          title = title.substring(0,62);
           title += "...";
         }
 
@@ -118,8 +134,8 @@ $(document).ready(function () {
         html += title;
         html += "</a>";
         html += "<div style='float: right;'>";
-        html += "<a class='spotify-play-from' href='#'>></a>&nbsp;&nbsp&nbsp;";
-        html += "<a class='spotify-add-to-queue' href='#'>+</a>";
+        html += "<a class='spotify-play-from' href='javascript:void(0)'>></a>&nbsp;&nbsp&nbsp;";
+        html += "<a class='spotify-add-to-queue' href='javascript:void(0)'>+</a>";
         html += "</div>";
         html += "</li>";
       });
