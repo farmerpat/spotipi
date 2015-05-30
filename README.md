@@ -48,6 +48,8 @@ $ sudo pip install pyalsaaudio # for use with libasound
 ```shell
 $ sudo pip install pyaudio # for use with port audio
 ```
+- Replace place-holders with your Spotify credentials in config.ini
+- If you want to use portaudio instead of alsa, change alsa to port in config.ini
 
 TODO
 ----
