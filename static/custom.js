@@ -3,20 +3,6 @@ window.playListsLoaded = false;
 $(document).ready(function () {
   console.log("reddie");
 
-  $("#show_controls").click(function () {
-    if ($(this).text() == "Show Controls") {
-      $(this).text("Hide Controls");
-      $(".control_panel").show();
-
-    } else if ($(this).text() == "Hide Controls") {
-      $(this).text("Show Controls");
-      $(".control_panel").hide();
-
-    } else {
-      console.log("the universe explodes");
-    }
-  });
-
   $("#play_button").click(function () {
     $.ajax({
       method: "GET",
@@ -52,6 +38,9 @@ $(document).ready(function () {
   });
 
   $("#play_queue").click(function () {
+    console.log("clicked play_queue");
+    return false;
+
     if ($("#play_queue").text() == "View Play Queue") {
       console.log("is da view play quee");
       $("#queue").html("<ul></ul>");
@@ -89,7 +78,13 @@ $(document).ready(function () {
   }
 
   $("#view_playlists").click(function () {
-    if ($("#view_playlists").text() == "View Playlists") {
+    var contType = $("#main_container").attr("contents");
+
+    if (contType != "playlists") {
+      $("#home").hide();
+      $("#queue").hide();
+      $("#now_playing_display").hide();
+
       if (!window.playListsLoaded) {
         $.ajax({
           method: "GET",
@@ -97,29 +92,38 @@ $(document).ready(function () {
           success: function (data) {
             if (data && data.playlists) {
               makePlaylistsDiv(data.playlists);
+              window.playLists = data.playlists;
               window.playListsLoaded = true;
-
+              makePlaylistsDiv(window.playlists);
             }
           }
         });
       }
 
-      $("#playlists").show();
-      $("#view_playlists").text("Hide Playlists");
-
-    } else {
-      $("#view_playlists").text("View Playlists");
-      $("#playlists").hide();
+      $("#accordion").show();
+      $("#main_container").attr("contents", "playlists");
 
     }
   });
 
   function makePlaylistsDiv (playlists) {
+    var html = "";
+
     $.each(playlists, function (i, playlist) {
-      var html = "<h3>";
+      html += "<div class='panel panel-default'>";
+      html += "<div class='panel-heading' role='tab' id='";
+      html += "heading" + i;
+      html +="'>";
+      html += "<h3 class='panel-title'>";
+      html += "<a data-toggle='collapse' data-parent='#accordion' aria-expanded='false'";
+      html += "href='#";
+      html += "collapse" + i + "' aria-controls='collapse" + i + "'>";
       html += playlist.name;
-      html += "</h3>";
-      html += "<div><p>";
+      html += "</a></h3></div>";
+      html += "<div class='panel-collapse collapse' id='collapse";
+      html += i + "' aria-labelledby='heading" + i + "'";
+      html += " role='tabpanel'>";
+      html += "<div class='panel-body'>";
       html += "<ul><li><a data-index='";
       html += i;
       html += "' class='spotify-playlist-link play-all-link' href='javascript:void(0)'>";
@@ -152,14 +156,11 @@ $(document).ready(function () {
         html += "</li>";
       });
 
-      html += "</ul></p></div>";
-
-      $("#playlists").append($(html));
+      html += "</ul>";
+      html += "</div></div></div>";
     });
 
-    $("#playlists").accordion({active: false,
-                               collapsible: true,
-                               heightStyle: "content"});
+    $("#accordion").append($(html));
 
     $(".spotify-track-link").click(function (e) {
       var trackUri = $(this).attr("data-spotify-track-uri");

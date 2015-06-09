@@ -1,0 +1,20 @@
+{
+  "name": "spotiPi",
+  "version": "0.0.1",
+  "homepage": "https://github.com/farmerpat/spotipi",
+  "description": "Web-controlled Spotify for Raspberry Pi",
+  "authors": [
+    "Patrick Connelly <patricksparbanieconnelly@gmail.com>"
+  ],
+  "license": "None",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "jquery-ui": "*",
+    "bootstrap": "3.*.*"
+  }
+}

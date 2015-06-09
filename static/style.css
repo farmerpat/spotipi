@@ -1,3 +1,4 @@
+/*
 body {
     font-family: "Verdana";
     background: #FCFEEB;
@@ -30,7 +31,6 @@ body {
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
-/*    width: 630px;*/
 }
 
 a.button {
@@ -60,7 +60,6 @@ a.control_panel {
 }
 
 #playlists .ui-accordion-header {
-    /*margin: 0;*/
 }
 
 #playlists .ui-accordion-header {
@@ -75,5 +74,5 @@ a.control_panel {
 #playlists .ui-state-active {
     background: #FCFEEB;
 }
-
+*/
 /*#playlists .ui-state-acti*/

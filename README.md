@@ -43,6 +43,9 @@ $ mv /path/to/key/spotify_appkey.key /path/to/repo/spotipi
 $ sudo pip install flask
 ```
 ```shell
+$ sudo pip install flask-bower
+```
+```shell
 $ sudo pip install pyalsaaudio # for use with libasound
 ```
 ```shell

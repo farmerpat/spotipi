@@ -2,6 +2,7 @@ from spotiPi import SpotiPi
 import ConfigParser
 import argparse
 from flask import Flask, url_for, render_template, jsonify
+from flask.ext.bower import Bower
 
 creds = ConfigParser.ConfigParser()
 
@@ -32,6 +33,7 @@ sp.loadPlaylists()
 # sp.logOut()
 
 app = Flask(__name__)
+Bower(app)
 
 @app.route("/")
 def index():
