@@ -1,8 +1,6 @@
 window.playListsLoaded = false;
 
 $(document).ready(function () {
-  console.log("reddie");
-
   $("#play_button").click(function () {
     $.ajax({
       method: "GET",
@@ -38,42 +36,38 @@ $(document).ready(function () {
   });
 
   $("#play_queue").click(function () {
-    console.log("clicked play_queue");
-    return false;
+    var contentType = $("#main_container").attr("contents");
+    clearPlayQueue();
+    buildPlayQueue();
 
-    if ($("#play_queue").text() == "View Play Queue") {
-      console.log("is da view play quee");
-      $("#queue").html("<ul></ul>");
-      $("#play_queue").text("Hide Play Queue");
-      displayPlayQueue();
+    if (contentType != "queue") {
+      $("#home").hide();
+      $("#accordion").hide();
+      $("#now_playing_display").hide();
 
-    } else {
-      $("#queue").hide();
-      $("#play_queue").text("View Play Queue");
-
+      $("#queue").show();
+      $("#main_container").attr("contents", "queue");
     }
   });
 
-  function displayPlayQueue() {
+  function clearPlayQueue() {
+    $("#queue ul").html("");
+  }
+
+  function buildPlayQueue() {
     $.ajax({
       method: "GET",
       url: "/playQueue",
       success: function (data) {
         if (data && data.tracks) {
-          buildPlayQueue(data.tracks);
-          $("#queue").show();
+          $.each(data.tracks, function (i, track) {
+            var nodeString = "<li>";
+            nodeString += track.title;
+            nodeString += "</li>";
+            $("#queue ul").append(nodeString);
+          });
         }
       }
-    });
-  }
-
-  function buildPlayQueue(tracks) {
-    $.each(tracks, function (i, track) {
-      var nodeString = "<li>";
-      nodeString += track.title;
-      nodeString += "</li>";
-
-      $("#queue ul").append(nodeString);
     });
   }
 
